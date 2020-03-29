@@ -3,6 +3,7 @@
     const PERCENT_TO_CHECK1 = 50;
     const PERCENT_TO_CHECK2 = 80;
     const setupInterval = setInterval(waitInit, 500);
+    let removerTimeout;
     let container;
     let button;
     let video;
@@ -28,8 +29,10 @@
     }
 
     function showMessageIfNecessary() {
-        if (!alreadyLiked())
+        if (!alreadyLiked()) {
             showRemainder();
+            setupRemainderRemover();
+        }
         else
             hideRemainder();
     }
@@ -62,7 +65,9 @@
     }
 
     function setupRemainderRemover() {
-        setTimeout(function() {
+        if (removerTimeout) clearTimeout(removerTimeout);
+
+        removerTimeout = setTimeout(function() {
             hideRemainder();
         }, TIME_TO_AUTO_HIDE);
     }
