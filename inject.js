@@ -68,7 +68,6 @@
 
         removerTimeout = setTimeout(function() {
             hideRemainder();
-            console.log('hidden');
         }, TIME_TO_AUTO_HIDE);
     }
 
