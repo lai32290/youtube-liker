@@ -1,5 +1,6 @@
 (function() {
     const TIME_TO_AUTO_HIDE = 5000;
+    const PERCENT_TO_CHECK0 = 1;
     const PERCENT_TO_CHECK1 = 50;
     const PERCENT_TO_CHECK2 = 80;
     const setupInterval = setInterval(waitInit, 500);
@@ -7,6 +8,7 @@
     let container;
     let button;
     let video;
+
     function waitInit() {
         video = document.querySelector('video.video-stream');
         if (video) {
@@ -17,12 +19,12 @@
 
     function setup() {
         createButton();
-        showRemainder();
-        setupRemainderRemover();
         appendKeymap();
 
         setInterval(function() {
-            if (videoProgressIn(PERCENT_TO_CHECK1) || videoProgressIn(PERCENT_TO_CHECK2)) {
+            if (videoProgressIn(PERCENT_TO_CHECK0) ||
+                videoProgressIn(PERCENT_TO_CHECK1) ||
+                videoProgressIn(PERCENT_TO_CHECK2)) {
                 showMessageIfNecessary();
             }
         }, 300);
@@ -31,10 +33,7 @@
     function showMessageIfNecessary() {
         if (!alreadyLiked()) {
             showRemainder();
-            setupRemainderRemover();
         }
-        else
-            hideRemainder();
     }
 
     function alreadyLiked() {
@@ -42,7 +41,7 @@
     }
 
     function videoProgressIn(percent) {
-        const currentPercent = video.currentTime / video.duration * 100;
+        const currentPercent = parseInt(video.currentTime / video.duration * 100);
         return currentPercent >= (percent - 1) && currentPercent <= (percent + 1);
     }
 
@@ -69,11 +68,13 @@
 
         removerTimeout = setTimeout(function() {
             hideRemainder();
+            console.log('hidden');
         }, TIME_TO_AUTO_HIDE);
     }
 
     function showRemainder() {
         container.style.display = 'block';
+        setupRemainderRemover();
     }
 
     function hideRemainder() {
