@@ -19,7 +19,6 @@
 
     function setup() {
         createButton();
-        appendKeymap();
 
         setInterval(function() {
             if (videoProgressIn(PERCENT_TO_CHECK0) ||
@@ -103,4 +102,6 @@
     function getThumbsupIcon() {
         return document.querySelector('#menu-container ytd-toggle-button-renderer:first-child yt-icon');
     }
+
+    appendKeymap();
 })();
