@@ -81,6 +81,7 @@
 
     function appendKeymap() {
         document.body.onkeyup = function(e) {
+			console.log('click', getThumbsupButton());
             if (e.key === 'v' && getThumbsupButton() && !alreadyLiked()) {
                 thumbsup();
             }
